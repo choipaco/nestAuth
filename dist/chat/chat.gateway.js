@@ -8,58 +8,55 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param = (this && this.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ChatGateway = void 0;
 const websockets_1 = require("@nestjs/websockets");
+const socket_io_1 = require("socket.io");
+const chat_service_1 = require("./chat.service");
 let ChatGateway = class ChatGateway {
-    constructor() {
-        this.wsClients = [];
+    constructor(chatService) {
+        this.chatService = chatService;
+        this.users = new Map();
     }
-    connectSomeone(data, client) {
-        const [nickname, room] = data;
-        console.log(`${nickname}님이 코드: ${room}방에 접속했습니다.`);
-        const comeOn = `${nickname}님이 입장했습니다.`;
-        this.server.emit('comeOn' + room, comeOn);
-        this.wsClients.push(client);
+    handleConnection(client) {
+        const userId = client.handshake.query.uuid;
+        this.users.set(client.id, String(userId));
+        console.log(`Client connected: ${client.id} with userId: ${userId}`);
     }
-    broadcast(event, client, message) {
-        for (let c of this.wsClients) {
-            if (client.id == c.id)
-                continue;
-            c.emit(event, message);
-        }
+    handleDisconnect(client) {
+        console.log(`Client disconnected: ${client.id}`);
+        this.users.delete(client.id);
     }
-    sendMessage(data, client) {
-        const [room, nickname, message] = data;
-        console.log(`${client.id} : ${data}`);
-        this.broadcast(room, client, [nickname, message]);
+    async handleJoinChatroom(client, { chatroomId }) {
+        const userId = this.users.get(client.id);
+        client.join(chatroomId);
+        console.log(`${userId} joined chatroom: ${chatroomId}`);
+    }
+    async handleSendMessage(client, { chatroomId, message }) {
+        const userId = this.users.get(client.id);
+        const chatMessage = await this.chatService.createMessage(userId, chatroomId, message);
+        this.server.to(chatroomId).emit('message', chatMessage);
     }
 };
 exports.ChatGateway = ChatGateway;
 __decorate([
     (0, websockets_1.WebSocketServer)(),
-    __metadata("design:type", Object)
+    __metadata("design:type", socket_io_1.Socket)
 ], ChatGateway.prototype, "server", void 0);
 __decorate([
-    (0, websockets_1.SubscribeMessage)('hihi'),
-    __param(0, (0, websockets_1.MessageBody)()),
-    __param(1, (0, websockets_1.ConnectedSocket)()),
+    (0, websockets_1.SubscribeMessage)('joinChatroom'),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Object]),
-    __metadata("design:returntype", void 0)
-], ChatGateway.prototype, "connectSomeone", null);
+    __metadata("design:paramtypes", [socket_io_1.Socket, Object]),
+    __metadata("design:returntype", Promise)
+], ChatGateway.prototype, "handleJoinChatroom", null);
 __decorate([
-    (0, websockets_1.SubscribeMessage)('send'),
-    __param(0, (0, websockets_1.MessageBody)()),
-    __param(1, (0, websockets_1.ConnectedSocket)()),
+    (0, websockets_1.SubscribeMessage)('sendMessage'),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Object]),
-    __metadata("design:returntype", void 0)
-], ChatGateway.prototype, "sendMessage", null);
+    __metadata("design:paramtypes", [socket_io_1.Socket, Object]),
+    __metadata("design:returntype", Promise)
+], ChatGateway.prototype, "handleSendMessage", null);
 exports.ChatGateway = ChatGateway = __decorate([
-    (0, websockets_1.WebSocketGateway)({ namespace: 'chat' })
+    (0, websockets_1.WebSocketGateway)({ namespace: 'chat' }),
+    __metadata("design:paramtypes", [chat_service_1.ChatService])
 ], ChatGateway);
 //# sourceMappingURL=chat.gateway.js.map

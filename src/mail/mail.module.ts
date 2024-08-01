@@ -5,8 +5,6 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
 import { MailService } from './mail.service';
 import { MailController } from './mail.controller';
 import { ConfigService } from '@nestjs/config';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import UsersEntity from 'src/entities/users.entity';
 import { CacheModule } from '@nestjs/cache-manager';
 
 @Module({

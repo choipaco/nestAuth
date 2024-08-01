@@ -11,6 +11,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
 const board_entity_1 = require("./board.entity");
+const chatroom_entity_1 = require("./chatroom.entity");
+const chatting_entity_1 = require("./chatting.entity");
 let UsersEntity = class UsersEntity {
 };
 __decorate([
@@ -37,6 +39,18 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => board_entity_1.default, board => board.user),
     __metadata("design:type", Array)
 ], UsersEntity.prototype, "board", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => chatroom_entity_1.default, (chatroom) => chatroom.user1),
+    __metadata("design:type", Array)
+], UsersEntity.prototype, "chatrooms", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => chatroom_entity_1.default, (chatroom) => chatroom.user2),
+    __metadata("design:type", Array)
+], UsersEntity.prototype, "chatrooms2", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => chatting_entity_1.default, (message) => message.sender),
+    __metadata("design:type", Array)
+], UsersEntity.prototype, "messages", void 0);
 UsersEntity = __decorate([
     (0, typeorm_1.Entity)({ name: 'users' })
 ], UsersEntity);

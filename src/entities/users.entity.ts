@@ -1,5 +1,7 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import BoardEntity from "./board.entity";
+import ChatroomEntity from "./chatroom.entity";
+import ChattingEntity from "./chatting.entity";
 @Entity({ name: 'users' })
 export default class UsersEntity {
   @PrimaryGeneratedColumn('uuid', { name: 'uuid' })
@@ -20,4 +22,12 @@ export default class UsersEntity {
   @OneToMany(() =>  BoardEntity, board => board.user)
   board: BoardEntity[]
 
+  @OneToMany(() => ChatroomEntity, (chatroom) => chatroom.user1)
+  chatrooms: ChatroomEntity[];
+
+  @OneToMany(() => ChatroomEntity, (chatroom) => chatroom.user2)
+  chatrooms2: ChatroomEntity[];
+
+  @OneToMany(() => ChattingEntity, (message) => message.sender)
+  messages: ChattingEntity[];
 }
