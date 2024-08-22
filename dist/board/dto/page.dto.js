@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PageDTO = void 0;
+const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 class PageDTO {
     constructor() {
@@ -19,10 +20,12 @@ class PageDTO {
 }
 exports.PageDTO = PageDTO;
 __decorate([
+    (0, swagger_1.ApiProperty)({ default: 10 }),
     (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)
 ], PageDTO.prototype, "max", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({ default: 1 }),
     (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)
 ], PageDTO.prototype, "page", void 0);

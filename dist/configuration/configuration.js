@@ -11,5 +11,8 @@ exports.default = () => ({
     MAIL_USER: process.env.MAIL_USER,
     MAIL_PASS: process.env.MAIL_PASS,
     SECRET_TOKEN: process.env.SECRET_TOKEN,
+    REFRESH_TOKEN: process.env.REFRESH_TOKEN,
+    JWT_ACCESS_EXPIRATION_TIME: process.env.JWT_ACCESS_EXPIRATION_TIME,
+    JWT_REFRESH_EXPIRATION_TIME: process.env.JWT_REFRESH_EXPIRATION_TIME
 });
 //# sourceMappingURL=configuration.js.map

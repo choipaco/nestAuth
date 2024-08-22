@@ -33,7 +33,7 @@ exports.AuthModule = AuthModule = __decorate([
                 global: true,
                 secret: jsonWebToken_constants_1.jwtConstants.secret,
                 signOptions: {
-                    expiresIn: '3h'
+                    expiresIn: jsonWebToken_constants_1.jwtConstants.expiresIn
                 }
             }),
             passport_1.PassportModule.register({ defaultStrategy: 'jwt' })

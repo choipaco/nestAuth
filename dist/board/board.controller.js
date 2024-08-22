@@ -21,6 +21,8 @@ const get_user_decorator_1 = require("../auth/security/get-user.decorator");
 const users_entity_1 = require("../entities/users.entity");
 const page_dto_1 = require("./dto/page.dto");
 const update_board_dto_1 = require("./dto/update-board.dto");
+const swagger_1 = require("@nestjs/swagger");
+const page_response_dto_1 = require("./dto/page-response.dto");
 let BoardController = class BoardController {
     constructor(boardService) {
         this.boardService = boardService;
@@ -44,6 +46,8 @@ let BoardController = class BoardController {
 exports.BoardController = BoardController;
 __decorate([
     (0, common_1.Post)('/create'),
+    (0, swagger_1.ApiBadRequestResponse)({ description: '입력이 틀렸을 경우' }),
+    (0, swagger_1.ApiCreatedResponse)({ description: '성공한 경우' }),
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     __param(0, (0, common_1.Body)()),
     __param(1, (0, get_user_decorator_1.GetUser)()),
@@ -53,6 +57,7 @@ __decorate([
 ], BoardController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)('/list'),
+    (0, swagger_1.ApiOkResponse)({ description: '성공한 경우', type: page_response_dto_1.PaginatedResponseDto }),
     __param(0, (0, common_1.Query)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [page_dto_1.PageDTO]),
@@ -86,6 +91,8 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], BoardController.prototype, "delete", null);
 exports.BoardController = BoardController = __decorate([
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiTags)('board'),
     (0, common_1.Controller)('board'),
     __metadata("design:paramtypes", [board_service_1.BoardService])
 ], BoardController);

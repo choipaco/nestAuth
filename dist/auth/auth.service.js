@@ -18,11 +18,29 @@ const common_1 = require("@nestjs/common");
 const bcrypt = require("bcrypt");
 const jwt_1 = require("@nestjs/jwt");
 const user_service_1 = require("./user.service");
+const config_1 = require("@nestjs/config");
 let AuthService = class AuthService {
     constructor(userService, cacheService, jwtService) {
         this.userService = userService;
         this.cacheService = cacheService;
         this.jwtService = jwtService;
+    }
+    async generateRefreshToken(user) {
+        const payload = {
+            uuid: user.uuid,
+            id: user.id,
+        };
+        return this.jwtService.signAsync({ uuid: payload.uuid }, {
+            secret: new config_1.ConfigService().get('REFRESH_TOKEN'),
+            expiresIn: '3h'
+        });
+    }
+    async generateAccessToken(user) {
+        const payload = {
+            uuid: user.uuid,
+            id: user.id,
+        };
+        return this.jwtService.sign(payload);
     }
     async Register(registerDTO) {
         const mailChk = await this.cacheService.get(registerDTO.email);
@@ -43,9 +61,10 @@ let AuthService = class AuthService {
         const passwordChk = await bcrypt.compare(user.password, userExist.password);
         if (!userExist || !passwordChk)
             throw new common_1.UnauthorizedException('아이디나 비밀번호를 다시 입력해주세요');
-        const payload = { uuid: userExist.uuid, id: userExist.id };
+        const refreshToken = this.generateRefreshToken(userExist);
         return {
-            accessToken: this.jwtService.sign(payload)
+            accessToken: this.generateAccessToken(userExist),
+            refreshToken
         };
     }
     async tokenValidateUser(payload) {
@@ -63,6 +82,17 @@ let AuthService = class AuthService {
     async infoMe(user) {
         user.password = undefined;
         return user;
+    }
+    async refresh(refreshTokenDto) {
+        const { refresh_token } = refreshTokenDto;
+        const decodedRefreshToken = this.jwtService.verify(refresh_token, { secret: process.env.JWT_REFRESH_SECRET });
+        const userId = decodedRefreshToken.uuid;
+        const user = await this.userService.getUserIfRefreshTokenMatches(refresh_token, userId);
+        if (!user) {
+            throw new common_1.UnauthorizedException('Invalid user!');
+        }
+        const accessToken = await this.generateAccessToken(user);
+        return { accessToken };
     }
 };
 exports.AuthService = AuthService;

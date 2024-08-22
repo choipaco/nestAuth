@@ -9,9 +9,10 @@ async function bootstrap() {
 
   app.setGlobalPrefix('api');
   const config = new DocumentBuilder()
-    .setTitle("title")
-    .setDescription("version. 1")
-    .setVersion("1.0")
+    .setTitle("base")
+    .setDescription("base code")
+    .setVersion("1.12.2")
+    .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

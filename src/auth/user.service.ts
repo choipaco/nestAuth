@@ -5,6 +5,7 @@ import { FindOneOptions, Repository } from 'typeorm';
 import { LoginDTO } from './dto/login.dto';
 import * as bcrypt from 'bcrypt';
 import { RegisterDTO } from './dto/register.dto';
+import { ConfigService } from '@nestjs/config';
 @Injectable()
 export class UserService {
     constructor(
@@ -26,6 +27,19 @@ export class UserService {
       user.password, 10,
     );
     return Promise.resolve();
+  }
+
+  async getUserIfRefreshTokenMatches(refreshToken: string, userId: string){
+    const user: UsersEntity = await this.findByFields({
+      where: {
+        id: userId
+      }
+    });
+
+	// 만약 isRefreshTokenMatching이 true라면 user 객체를 반환
+    if (user) {
+      return user;
+    } 
   }
 }
 

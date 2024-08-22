@@ -8,4 +8,5 @@ export declare class UserService {
     findByFields(options: FindOneOptions<LoginDTO | UsersEntity>): Promise<UsersEntity | undefined>;
     save(registerDTO: RegisterDTO): Promise<RegisterDTO & UsersEntity>;
     transformPassword(user: RegisterDTO): Promise<void>;
+    getUserIfRefreshTokenMatches(refreshToken: string, userId: string): Promise<UsersEntity>;
 }

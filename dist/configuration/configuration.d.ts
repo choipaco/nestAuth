@@ -9,5 +9,8 @@ declare const _default: () => {
     MAIL_USER: string;
     MAIL_PASS: string;
     SECRET_TOKEN: string;
+    REFRESH_TOKEN: string;
+    JWT_ACCESS_EXPIRATION_TIME: string;
+    JWT_REFRESH_EXPIRATION_TIME: string;
 };
 export default _default;

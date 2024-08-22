@@ -9,42 +9,53 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RegisterDTO = void 0;
+exports.PaginatedResponseDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
-const class_validator_1 = require("class-validator");
-const users_entity_1 = require("../../entities/users.entity");
-class RegisterDTO {
-    toEntity() {
-        const users = new users_entity_1.default();
-        users.id = this.id;
-        users.email = this.email;
-        users.name = this.name;
-        users.password = this.password;
-        return users;
-    }
+class UserDto {
 }
-exports.RegisterDTO = RegisterDTO;
 __decorate([
     (0, swagger_1.ApiProperty)(),
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.MinLength)(3),
     __metadata("design:type", String)
-], RegisterDTO.prototype, "id", void 0);
+], UserDto.prototype, "uuid", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
-    (0, class_validator_1.IsEmail)(),
     __metadata("design:type", String)
-], RegisterDTO.prototype, "email", void 0);
+], UserDto.prototype, "id", void 0);
+class ItemDto {
+}
 __decorate([
     (0, swagger_1.ApiProperty)(),
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.MinLength)(2),
-    (0, class_validator_1.MaxLength)(5),
     __metadata("design:type", String)
-], RegisterDTO.prototype, "name", void 0);
+], ItemDto.prototype, "uuid", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
-    (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], RegisterDTO.prototype, "password", void 0);
-//# sourceMappingURL=register.dto.js.map
+], ItemDto.prototype, "title", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", String)
+], ItemDto.prototype, "createdAt", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ type: UserDto }),
+    __metadata("design:type", UserDto)
+], ItemDto.prototype, "user", void 0);
+class PaginatedResponseDto {
+}
+exports.PaginatedResponseDto = PaginatedResponseDto;
+__decorate([
+    (0, swagger_1.ApiProperty)({ type: [ItemDto] }),
+    __metadata("design:type", Array)
+], PaginatedResponseDto.prototype, "items", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Number)
+], PaginatedResponseDto.prototype, "total", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Number)
+], PaginatedResponseDto.prototype, "currentPage", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Number)
+], PaginatedResponseDto.prototype, "totalPages", void 0);
+//# sourceMappingURL=page-response.dto.js.map

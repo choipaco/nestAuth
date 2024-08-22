@@ -6,6 +6,7 @@ import { CreateBoardDTO } from './dto/create-board.dto';
 import UsersEntity from 'src/entities/users.entity';
 import { PageDTO } from './dto/page.dto';
 import { UpdateBoardDTO } from './dto/update-board.dto';
+import { Response } from 'express';
 
 @Injectable()
 export class BoardService {
@@ -18,6 +19,7 @@ export class BoardService {
         const board = createBoardDTO.toEntity();
         board.user = user;
         await this.boardRepository.save(board);
+
     }
 
 

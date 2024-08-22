@@ -14,7 +14,7 @@ export default class UsersEntity {
   email: string;
 
   @Column({name: 'name', type: 'varchar', length: 5, nullable: false, })
-  name: string
+  name: string;
 
   @Column({ name: 'password', type: 'text', nullable: false }) 
   password: string;

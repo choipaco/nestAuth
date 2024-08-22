@@ -33,6 +33,16 @@ let UserService = class UserService {
         user.password = await bcrypt.hash(user.password, 10);
         return Promise.resolve();
     }
+    async getUserIfRefreshTokenMatches(refreshToken, userId) {
+        const user = await this.findByFields({
+            where: {
+                id: userId
+            }
+        });
+        if (user) {
+            return user;
+        }
+    }
 };
 exports.UserService = UserService;
 exports.UserService = UserService = __decorate([

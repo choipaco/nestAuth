@@ -9,24 +9,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const typeorm_1 = require("typeorm");
-const users_entity_1 = require("./users.entity");
-let ChatroomEntity = class ChatroomEntity {
-};
+exports.RefreshTokenDto = void 0;
+const class_validator_1 = require("class-validator");
+class RefreshTokenDto {
+}
+exports.RefreshTokenDto = RefreshTokenDto;
 __decorate([
-    (0, typeorm_1.PrimaryGeneratedColumn)('uuid', { name: 'uuid' }),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
-], ChatroomEntity.prototype, "uuid", void 0);
-__decorate([
-    (0, typeorm_1.ManyToOne)(() => users_entity_1.default, (user) => user.chatrooms),
-    __metadata("design:type", users_entity_1.default)
-], ChatroomEntity.prototype, "user1", void 0);
-__decorate([
-    (0, typeorm_1.ManyToOne)(() => users_entity_1.default, (user) => user.chatrooms),
-    __metadata("design:type", users_entity_1.default)
-], ChatroomEntity.prototype, "user2", void 0);
-ChatroomEntity = __decorate([
-    (0, typeorm_1.Entity)({ name: 'users' })
-], ChatroomEntity);
-exports.default = ChatroomEntity;
-//# sourceMappingURL=chat.entity.js.map
+], RefreshTokenDto.prototype, "refresh_token", void 0);
+//# sourceMappingURL=refreshToken.dto.js.map

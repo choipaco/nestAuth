@@ -17,6 +17,7 @@ const common_1 = require("@nestjs/common");
 const mail_service_1 = require("./mail.service");
 const mail_dto_1 = require("./dto/mail.dto");
 const mailChk_dto_1 = require("./dto/mailChk.dto");
+const swagger_1 = require("@nestjs/swagger");
 let MailController = class MailController {
     constructor(mailService) {
         this.mailService = mailService;
@@ -44,6 +45,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], MailController.prototype, "codeChk", null);
 exports.MailController = MailController = __decorate([
+    (0, swagger_1.ApiTags)('mail'),
     (0, common_1.Controller)('mail'),
     __metadata("design:paramtypes", [mail_service_1.MailService])
 ], MailController);

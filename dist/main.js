@@ -9,9 +9,10 @@ async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
     app.setGlobalPrefix('api');
     const config = new swagger_1.DocumentBuilder()
-        .setTitle("title")
-        .setDescription("version. 1")
-        .setVersion("1.0")
+        .setTitle("base")
+        .setDescription("base code")
+        .setVersion("1.12.2")
+        .addBearerAuth()
         .build();
     const document = swagger_1.SwaggerModule.createDocument(app, config);
     app.useGlobalPipes(new common_1.ValidationPipe({

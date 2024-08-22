@@ -9,6 +9,7 @@ import { jwtConstants } from './jsonWebToken.constants';
 import { JwtStrategy } from './security/passport.jwt.strategy';
 import { UserService } from './user.service';
 import { PassportModule } from '@nestjs/passport';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
@@ -21,7 +22,7 @@ import { PassportModule } from '@nestjs/passport';
       global: true,
       secret: jwtConstants.secret,
       signOptions: {
-          expiresIn: '3h'
+          expiresIn: jwtConstants.expiresIn
       }
     }),
     PassportModule.register({ defaultStrategy: 'jwt' })

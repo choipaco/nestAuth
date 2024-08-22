@@ -1,1 +1,1 @@
-{"version":3,"file":"mail.dto.js","sourceRoot":"","sources":["../../../src/mail/dto/mail.dto.ts"],"names":[],"mappings":";;;;;;;;;;;;AAAA,qDAAoD;AAEpD,MAAa,OAAO;CAInB;AAJD,0BAIC;AADG;IADC,IAAA,yBAAO,GAAE;;sCACI"}
+{"version":3,"file":"mail.dto.js","sourceRoot":"","sources":["../../../src/mail/dto/mail.dto.ts"],"names":[],"mappings":";;;;;;;;;;;;AAAA,6CAA8C;AAC9C,qDAAoD;AAEpD,MAAa,OAAO;CAKnB;AALD,0BAKC;AADG;IAFC,IAAA,qBAAW,GAAE;IACb,IAAA,yBAAO,GAAE;;sCACI"}
