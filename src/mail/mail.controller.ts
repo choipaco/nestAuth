@@ -7,15 +7,15 @@ import { ApiTags } from '@nestjs/swagger';
 @ApiTags('mail')
 @Controller('mail')
 export class MailController {
-    constructor(private readonly mailService: MailService) {}
+  constructor(private readonly mailService: MailService) {}
 
-    @Post('/sendCode')
-    async sendCode(@Body() email:MailDTO){
-        return this.mailService.sendCode(email);
-    }
+  @Post('/sendCode')
+  async sendCode(@Body() email: MailDTO) {
+    return this.mailService.sendCode(email);
+  }
 
-    @Post('/codeChk')
-    async codeChk(@Body() mailChk:MailChkDTO){
-        return this.mailService.codeChk(mailChk);
-    }
+  @Post('/codeChk')
+  async codeChk(@Body() mailChk: MailChkDTO) {
+    return this.mailService.codeChk(mailChk);
+  }
 }

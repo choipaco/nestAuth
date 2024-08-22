@@ -9,9 +9,9 @@ async function bootstrap() {
 
   app.setGlobalPrefix('api');
   const config = new DocumentBuilder()
-    .setTitle("base")
-    .setDescription("base code")
-    .setVersion("1.12.2")
+    .setTitle('base')
+    .setDescription('base code')
+    .setVersion('1.12.2')
     .addBearerAuth()
     .build();
 
@@ -22,9 +22,9 @@ async function bootstrap() {
       whitelist: true,
       transform: true,
       transformOptions: {
-        enableImplicitConversion: true
-      }
-    })
+        enableImplicitConversion: true,
+      },
+    }),
   );
   app.useWebSocketAdapter(new IoAdapter(app));
   SwaggerModule.setup('/api-docs', app, document);

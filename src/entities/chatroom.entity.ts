@@ -1,6 +1,12 @@
-import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import UsersEntity from "./users.entity";
-import ChattingEntity from "./chatting.entity";
+import {
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import UsersEntity from './users.entity';
+import ChattingEntity from './chatting.entity';
 @Entity({ name: 'chatroom' })
 export default class ChatroomEntity {
   @PrimaryGeneratedColumn('uuid', { name: 'uuid' })
@@ -14,8 +20,7 @@ export default class ChatroomEntity {
 
   @OneToMany(() => ChattingEntity, (message) => message.chatroom)
   messages: ChattingEntity[];
-  
-  @CreateDateColumn({type: "timestamp", name: 'createdAt'})
-  createdAt: Date
 
+  @CreateDateColumn({ type: 'timestamp', name: 'createdAt' })
+  createdAt: Date;
 }

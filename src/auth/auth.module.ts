@@ -15,19 +15,19 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
   imports: [
     CacheModule.register({
       store: 'memory',
-      ttl: 30
+      ttl: 30,
     }),
     TypeOrmModule.forFeature([UsersEntity]),
     JwtModule.register({
       global: true,
       secret: jwtConstants.secret,
       signOptions: {
-          expiresIn: jwtConstants.expiresIn
-      }
+        expiresIn: jwtConstants.expiresIn,
+      },
     }),
-    PassportModule.register({ defaultStrategy: 'jwt' })
+    PassportModule.register({ defaultStrategy: 'jwt' }),
   ],
   controllers: [AuthController],
-  providers: [AuthService,UserService,JwtStrategy]
+  providers: [AuthService, UserService, JwtStrategy],
 })
 export class AuthModule {}

@@ -6,6 +6,12 @@ import { BoardModule } from './board/board.module';
 import { ChatModule } from './chat/chat.module';
 
 @Module({
-  imports: [ConfigurationModule, AuthModule, MailModule, BoardModule, ChatModule],
+  imports: [
+    ConfigurationModule,
+    AuthModule,
+    MailModule,
+    BoardModule,
+    ChatModule,
+  ],
 })
 export class AppModule {}

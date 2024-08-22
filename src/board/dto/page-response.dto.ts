@@ -1,39 +1,37 @@
 import { ApiProperty, ApiOkResponse } from '@nestjs/swagger';
 
 class UserDto {
-    @ApiProperty()
-    uuid: string;
+  @ApiProperty()
+  uuid: string;
 
-    @ApiProperty()
-    id: string;
+  @ApiProperty()
+  id: string;
 }
 
 class ItemDto {
-    @ApiProperty()
-    uuid: string;
+  @ApiProperty()
+  uuid: string;
 
-    @ApiProperty()
-    title: string;
+  @ApiProperty()
+  title: string;
 
-    @ApiProperty()
-    createdAt: string;
+  @ApiProperty()
+  createdAt: string;
 
-    @ApiProperty({ type: UserDto })
-    user: UserDto;
+  @ApiProperty({ type: UserDto })
+  user: UserDto;
 }
 
 export class PaginatedResponseDto {
-    @ApiProperty({ type: [ItemDto] })
-    items: ItemDto[];
+  @ApiProperty({ type: [ItemDto] })
+  items: ItemDto[];
 
-    @ApiProperty()
-    total: number;
+  @ApiProperty()
+  total: number;
 
-    @ApiProperty()
-    currentPage: number;
+  @ApiProperty()
+  currentPage: number;
 
-    @ApiProperty()
-    totalPages: number;
+  @ApiProperty()
+  totalPages: number;
 }
-
-

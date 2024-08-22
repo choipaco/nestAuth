@@ -8,39 +8,36 @@ import { RegisterDTO } from './dto/register.dto';
 import { ConfigService } from '@nestjs/config';
 @Injectable()
 export class UserService {
-    constructor(
-        @InjectRepository(UsersEntity)
-        private readonly userRepository: Repository<UsersEntity>,
-    ){}
+  constructor(
+    @InjectRepository(UsersEntity)
+    private readonly userRepository: Repository<UsersEntity>,
+  ) {}
 
-  async findByFields(options: FindOneOptions<LoginDTO | UsersEntity>): Promise<UsersEntity | undefined> {
+  async findByFields(
+    options: FindOneOptions<LoginDTO | UsersEntity>,
+  ): Promise<UsersEntity | undefined> {
     return await this.userRepository.findOne(options);
   }
 
-  async save(registerDTO: RegisterDTO){
+  async save(registerDTO: RegisterDTO) {
     await this.transformPassword(registerDTO);
     return await this.userRepository.save(registerDTO);
   }
 
   async transformPassword(user: RegisterDTO) {
-    user.password = await bcrypt.hash(
-      user.password, 10,
-    );
+    user.password = await bcrypt.hash(user.password, 10);
     return Promise.resolve();
   }
 
-  async getUserIfRefreshTokenMatches(refreshToken: string, userId: string){
+  async getUserIfRefreshTokenMatches(refreshToken: string, userId: string) {
     const user: UsersEntity = await this.findByFields({
       where: {
-        id: userId
-      }
+        id: userId,
+      },
     });
 
-	// 만약 isRefreshTokenMatching이 true라면 user 객체를 반환
     if (user) {
       return user;
-    } 
+    }
   }
 }
-
-

@@ -11,7 +11,7 @@ import { ChatService } from './chat.service';
 @WebSocketGateway({ namespace: 'chat' })
 export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer() server: Socket;
-  
+
   private users: Map<string, string> = new Map(); // clientId와 userId 매핑
 
   constructor(private readonly chatService: ChatService) {}
@@ -28,16 +28,26 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   }
 
   @SubscribeMessage('joinChatroom')
-  async handleJoinChatroom(client: Socket, { chatroomId }: { chatroomId: string }) {
+  async handleJoinChatroom(
+    client: Socket,
+    { chatroomId }: { chatroomId: string },
+  ) {
     const userId = this.users.get(client.id); // 클라이언트의 유저 ID 가져오기
     client.join(chatroomId);
     console.log(`${userId} joined chatroom: ${chatroomId}`);
   }
 
   @SubscribeMessage('sendMessage')
-  async handleSendMessage(client: Socket, { chatroomId, message }: { chatroomId: string; message: string }) {
+  async handleSendMessage(
+    client: Socket,
+    { chatroomId, message }: { chatroomId: string; message: string },
+  ) {
     const userId = this.users.get(client.id); // 현재 클라이언트의 유저 ID 가져오기
-    const chatMessage = await this.chatService.createMessage(userId, chatroomId, message);
+    const chatMessage = await this.chatService.createMessage(
+      userId,
+      chatroomId,
+      message,
+    );
     this.server.to(chatroomId).emit('message', chatMessage);
   }
 }

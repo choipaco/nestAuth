@@ -11,7 +11,7 @@ import { CacheModule } from '@nestjs/cache-manager';
   imports: [
     MailerModule.forRootAsync({
       inject: [ConfigService],
-      useFactory: (configService:ConfigService) => ({
+      useFactory: (configService: ConfigService) => ({
         transport: {
           host: 'smtp.gmail.com',
           port: 587,
@@ -27,12 +27,12 @@ import { CacheModule } from '@nestjs/cache-manager';
             strict: true,
           },
         },
-      })
+      }),
     }),
     CacheModule.register({
       store: 'memory',
-      ttl: 30
-    })
+      ttl: 30,
+    }),
   ],
   controllers: [MailController],
   providers: [MailService],

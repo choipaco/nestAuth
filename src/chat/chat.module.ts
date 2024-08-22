@@ -8,10 +8,10 @@ import ChatroomEntity from 'src/entities/chatroom.entity';
 import UsersEntity from 'src/entities/users.entity';
 
 @Module({
-  imports:[
-    TypeOrmModule.forFeature([ChattingEntity,ChatroomEntity,UsersEntity]),
+  imports: [
+    TypeOrmModule.forFeature([ChattingEntity, ChatroomEntity, UsersEntity]),
   ],
   controllers: [ChatController],
-  providers: [ChatService,ChatGateway]
+  providers: [ChatService, ChatGateway],
 })
 export class ChatModule {}
