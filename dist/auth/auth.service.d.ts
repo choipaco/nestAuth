@@ -22,7 +22,5 @@ export declare class AuthService {
     tokenValidateUser(payload: Payload): Promise<UsersEntity>;
     info(uuid: string): Promise<UsersEntity>;
     infoMe(user: UsersEntity): Promise<UsersEntity>;
-    refresh(refreshTokenDto: RefreshTokenDto): Promise<{
-        accessToken: string;
-    }>;
+    refresh(refreshTokenDto: RefreshTokenDto): Promise<any>;
 }

@@ -85,14 +85,22 @@ let AuthService = class AuthService {
     }
     async refresh(refreshTokenDto) {
         const { refresh_token } = refreshTokenDto;
-        const decodedRefreshToken = this.jwtService.verify(refresh_token, { secret: process.env.JWT_REFRESH_SECRET });
-        const userId = decodedRefreshToken.uuid;
-        const user = await this.userService.getUserIfRefreshTokenMatches(refresh_token, userId);
-        if (!user) {
-            throw new common_1.UnauthorizedException('Invalid user!');
+        try {
+            const decodedRefreshToken = this.jwtService.verify(refresh_token, { secret: process.env.JWT_REFRESH_SECRET });
+            const userId = decodedRefreshToken.uuid;
+            const user = await this.userService.getUserIfRefreshTokenMatches(refresh_token, userId);
+            if (!user) {
+                throw new common_1.UnauthorizedException('틀린 토큰값입니다');
+            }
+            const accessToken = await this.generateAccessToken(user);
+            return { accessToken };
         }
-        const accessToken = await this.generateAccessToken(user);
-        return { accessToken };
+        catch (err) {
+            if (err.name === 'JsonWebTokenError') {
+                return new common_1.UnauthorizedException('잘못된 토큰값입니다');
+            }
+            return err;
+        }
     }
 };
 exports.AuthService = AuthService;
